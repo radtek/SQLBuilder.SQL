@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using SQLBuilder.SQL.Builder;
 
 namespace SQLBuilder.SQL {
@@ -67,10 +64,11 @@ namespace SQLBuilder.SQL {
         /// MySql Select Count builder.
         /// </summary>
         /// <param name="Database">The database.</param>
+        /// <param name="Schema">The schema.</param>
         /// <param name="Table">The table.</param>
         /// <returns>The instance of SelectCountQuery.</returns>
-        public static SelectCountQuery SelectCount(string Database, string Table) {
-            return new SelectCountQuery(Database, Table);
+        public static SelectCountQuery SelectCount(string Database, string Schema, string Table) {
+            return new SelectCountQuery(Database, Schema, Table);
         }
 
         /// <summary>
