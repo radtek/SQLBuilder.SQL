@@ -27,13 +27,18 @@ namespace SQLBuilder.SQL.Builder {
         /// Initializes the database, table, and table alias for the SELECT statement.
         /// </summary>
         /// <param name="Database">The database of the query.</param>
+        /// <param name="Schema">The schema of the query.</param>
         /// <param name="Table">The table of the query.</param>
         /// <param name="TableAlias">The alias of the table.</param>
-        public SelectCountQuery(string Database, string Table, string TableAlias) {
+        public SelectCountQuery(string Database, string Schema, string Table, string TableAlias) {
             if (Database.IsNullOrWhiteSpace()) {
                 throw new ArgumentException("Database argument should not be empty.");
             }
             this._Database = Database;
+            if (Schema.IsNullOrWhiteSpace()) {
+                throw new ArgumentException("Schema argument should not be empty.");
+            }
+            this._Schema = Schema;
             if (Table.IsNullOrWhiteSpace()) {
                 throw new ArgumentException("Table argument should not be empty.");
             }
@@ -46,7 +51,7 @@ namespace SQLBuilder.SQL.Builder {
             } else {
                 this._TableAlias = Table;
             }
-            this._From = String.Format("{0}.{1}{2}", Database, Table, !TableAlias.IsNullOrWhiteSpace() ? String.Format(" AS {0}", TableAlias) : null);
+            this._From = String.Format("{0}.{1}.{2}{3}", Database, Schema, Table, !TableAlias.IsNullOrWhiteSpace() ? String.Format(" AS {0}", TableAlias) : null);
             this._InitProperties();
         }
 
@@ -54,9 +59,10 @@ namespace SQLBuilder.SQL.Builder {
         /// Initializes the database, and table for the SELECT statement.
         /// </summary>
         /// <param name="Database">The database of the query.</param>
+        /// <param name="Schema">The schema of the query.</param>
         /// <param name="Table">The table of the query.</param>
-        public SelectCountQuery(string Database, string Table)
-            : this(Database, Table, null) {
+        public SelectCountQuery(string Database, string Schema, string Table)
+            : this(Database, Schema, Table, null) {
         }
         #endregion
 
